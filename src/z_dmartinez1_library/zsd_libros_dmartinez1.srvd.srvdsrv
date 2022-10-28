@@ -1,0 +1,5 @@
+@EndUserText.label: 'SD para Libreria'
+define service Zsd_libros_dmartinez1 {
+  expose z_b_libros;
+  expose z_b_clientes;
+}

@@ -1,0 +1,81 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+    typeName: 'Libro',
+    typeNamePlural: 'Libros',
+    imageUrl: 'Url',
+    title: {
+        type: #STANDARD,
+        criticalityRepresentation: #WITHOUT_ICON,
+        value: 'Titulo'
+    },
+    description: {
+        type: #STANDARD,
+        criticalityRepresentation: #WITHOUT_ICON,
+        value: 'Autor'
+    }
+}
+@Search.searchable: true
+annotate view z_b_libros with
+{
+  @UI.facet: [
+    { id: 'DetallesLibro', label: 'Detalles del libro', type: #COLLECTION, position: 10 },
+    { id: 'Libro', parentId: 'DetallesLibro', label: 'Detalles', type: #FIELDGROUP_REFERENCE,
+        position: 10, targetQualifier: 'DetallesLibro'},
+    { id: 'Cliente', label: 'Clientes', type: #LINEITEM_REFERENCE, targetElement: '_Clientes', position: 20 }
+    ]
+
+
+  @UI.fieldGroup: [{ qualifier: 'DetallesLibro', position: 10 }]
+  IdLibro;
+
+  @UI.fieldGroup: [{ qualifier: 'DetallesLibro', position: 20 }]
+  @UI.lineItem: [{ position: 20, importance: #HIGH }]
+  @Search: {
+      defaultSearchElement: true,
+      ranking: #MEDIUM,
+      fuzzinessThreshold: 0.8
+  }
+  Editorial;
+
+  @UI.fieldGroup: [{ qualifier: 'DetallesLibro', position: 30 }]
+  Idioma;
+
+  @UI: {
+  selectionField: [{ position: 10 }],
+  lineItem: [{ position: 10, importance: #HIGH }]
+  }
+  Titulo;
+
+  @UI.lineItem: [{ position: 10, importance: #HIGH }]
+  @Search: {
+      defaultSearchElement: true,
+      ranking: #MEDIUM,
+      fuzzinessThreshold: 0.8
+  }
+  Autor;
+
+  @UI.lineItem: [{ position: 30, importance: #HIGH }]
+  Paginas;
+
+  @UI.lineItem: [{ position: 40, importance: #HIGH }]
+  Precio;
+
+  @UI.lineItem: [{ position: 50, importance: #HIGH }]
+  Moneda;
+
+  @UI.lineItem: [{ position: 60, importance: #HIGH }]
+  @Consumption.valueHelpDefinition: [{ entity: {
+      name: 'z_b_catego',
+      element: 'Categoria'
+  } }]
+  Categoria;
+
+  //hacer representación de criticidad
+  @UI.lineItem: [{ position: 80, importance: #HIGH, criticality: 'Ventas' }]
+  Ventas;
+
+
+  @UI.lineItem: [{ position: 70, importance: #HIGH }]
+  _Clientes;
+
+}
